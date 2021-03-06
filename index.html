@@ -21,20 +21,24 @@ const currentState = {
     glidePathAngel: 0,
 }
 
+const feedToMeter = 0.3048;
+const milesToMeter = 1852;
+const knotsToMS = 0.514444;
+
 function convertAltitude(feedValue) {
-    const siNumber = Math.round(feedValue * 0.3048);
+    const siNumber = Math.round(feedValue * feedToMeter);
     currentState.altitude = siNumber;
     return `${siNumber} m`;
 }
 
 function convertDistance(milesValue) {
-    const siNumber = Math.round(milesValue * 1852); 
+    const siNumber = Math.round(milesValue * milesToMeter); 
     currentState.distance = siNumber;
     return `${siNumber} m`;
 }
 
 function convertGroundSpeed(knotsValue) {
-    const siNumber = Math.round(knotsValue * 0.514444);
+    const siNumber = Math.round(knotsValue * knotsToMS);
     currentState.groundSpeed = siNumber;
     return `${siNumber} m/s`;
 }
@@ -61,9 +65,20 @@ function updateSI(inputField) {
     }
 }
 
+function calculateVerticalSpeed() {
+    const verticalSpeedSI = Math.tan(currentState.glidePathAngel * 180 / Math.PI) * currentState.groundSpeed;
+    return Math.round(verticalSpeedSI / feedToMeter);
+}
+
+function calculate() {
+    const verticalSpeed = calculateVerticalSpeed();
+    document.getElementById('verticalSpeedOutput').innerHTML = `${verticalSpeed} feed/minute`;
+}
+
 function onInputFieldChange(event) {
     updateSI(event.target);
     console.log(currentState);
+    calculate();
 }
    </script>
             
@@ -107,6 +122,7 @@ inputFields.forEach(field => {
     updateSI(field);
 })
 console.log(currentState);
+calculate();
     </script>
 </body>
 </html>
