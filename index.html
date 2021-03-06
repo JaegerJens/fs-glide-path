@@ -14,20 +14,31 @@
     <h1>FS glide path calculator</h1>
     <script type="text/javascript">
 
+const currentState = {
+    altitude: 0,
+    distance: 0,
+    groundSpeed: 0,
+    glidePathAngel: 0,
+}
+
 function convertAltitude(feedValue) {
     const siNumber = Math.round(feedValue * 0.3048);
+    currentState.altitude = siNumber;
     return `${siNumber} m`;
 }
 
 function convertDistance(milesValue) {
     const siNumber = Math.round(milesValue * 1852); 
+    currentState.distance = siNumber;
     return `${siNumber} m`;
 }
 
 function convertGroundSpeed(knotsValue) {
     const siNumber = Math.round(knotsValue * 0.514444);
+    currentState.groundSpeed = siNumber;
     return `${siNumber} m/s`;
 }
+
 
 function updateSI(inputField) {
     const inputValue = inputField.value;
@@ -44,16 +55,20 @@ function updateSI(inputField) {
         case 'groundSpeed':
             outputElement.innerHTML = convertGroundSpeed(inputValue);
             break;
+        case 'glidePathAngel':
+            currentState.glidePathAngel = parseFloat(inputValue);
+            break;
     }
 }
 
 function onInputFieldChange(event) {
     updateSI(event.target);
+    console.log(currentState);
 }
    </script>
             
     <section>
-        <h2>Input</h2>
+        <h2>Parameter</h2>
         <div class="formfield">
             <label for="altitudeInput">Altitude in feet</label>
             <input type="number" id="altitudeInput" value="3000">
@@ -75,6 +90,14 @@ function onInputFieldChange(event) {
             <span></span>
         </div>
     </section>
+
+    <section>
+        <h2>Glide path</h2>
+        <div>
+            <span>Vertical speed:</span>
+            <span id="verticalSpeedOutput">-600 feed/min</span>
+        </div>
+    </section>
     
     <script type="text/javascript">
 const inputFields = document.querySelectorAll(".formfield input");
@@ -83,6 +106,7 @@ inputFields.forEach(field => {
     document.addEventListener("change", onInputFieldChange);
     updateSI(field);
 })
+console.log(currentState);
     </script>
 </body>
 </html>
