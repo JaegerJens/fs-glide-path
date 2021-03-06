@@ -1,0 +1,88 @@
+<html>
+<head>
+    <title>FS glide path calculator</title>
+    <style>
+.formfield {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin: .5rem;
+}
+    </style>
+</head>
+<body>
+    <h1>FS glide path calculator</h1>
+    <script type="text/javascript">
+
+function convertAltitude(feedValue) {
+    const siNumber = Math.round(feedValue * 0.3048);
+    return `${siNumber} m`;
+}
+
+function convertDistance(milesValue) {
+    const siNumber = Math.round(milesValue * 1852); 
+    return `${siNumber} m`;
+}
+
+function convertGroundSpeed(knotsValue) {
+    const siNumber = Math.round(knotsValue * 0.514444);
+    return `${siNumber} m/s`;
+}
+
+function updateSI(inputField) {
+    const inputValue = inputField.value;
+    const fieldName = inputField.id.replace('Input', '');
+    const outputId = `${fieldName}SI`;
+    const outputElement = document.getElementById(outputId);
+    switch (fieldName) {
+        case 'altitude':
+            outputElement.innerHTML = convertAltitude(inputValue);
+            break;
+        case 'distance':
+            outputElement.innerHTML = convertDistance(inputValue);
+            break;
+        case 'groundSpeed':
+            outputElement.innerHTML = convertGroundSpeed(inputValue);
+            break;
+    }
+}
+
+function onInputFieldChange(event) {
+    updateSI(event.target);
+}
+   </script>
+            
+    <section>
+        <h2>Input</h2>
+        <div class="formfield">
+            <label for="altitudeInput">Altitude in feet</label>
+            <input type="number" id="altitudeInput" value="3000">
+            <span id="altitudeSI">0 m</span>
+        </div>
+        <div class="formfield">
+            <label for="distanceInput">Distance in miles</label>
+            <input type="number" id="distanceInput" value="7">
+            <span id="distanceSI">0 m</span>
+        </div>
+        <div class="formfield">
+            <label for="groundSpeedInput">Ground speed in knots</label>
+            <input type="number" id="groundSpeedInput" value="80">
+            <span id="groundSpeedSI">0 m/s</span>
+        </div>
+        <div class="formfield">
+            <label for="">Glide path angel</label>
+            <input type="number" id="glidePathAngelInput" value="3.0">
+            <span></span>
+        </div>
+    </section>
+    
+    <script type="text/javascript">
+const inputFields = document.querySelectorAll(".formfield input");
+
+inputFields.forEach(field => {
+    document.addEventListener("change", onInputFieldChange);
+    updateSI(field);
+})
+    </script>
+</body>
+</html>
