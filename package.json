@@ -4,9 +4,12 @@
   "description": "flight simulator glide path calculator",
   "main": "index.js",
   "scripts": {
-    "build": "echo build this",
+    "build": "copyfiles -f -V src/* dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "copyfiles": "^2.4.1"
+  }
 }
