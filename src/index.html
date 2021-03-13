@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>FS glide path calculator</title>
+    <meta charset="UTF-8">
     <style>
 .formfield {
     display: flex;
@@ -77,9 +78,9 @@ function calculateRequiredAngel() {
 
 function calculate() {
     const requiredAngel = calculateRequiredAngel();
-    document.getElementById('requiredAngelOutput').innerHTML = `- ${requiredAngel} °`;
+    document.getElementById('requiredAngelOutput').innerText = `- ${requiredAngel} °`;
     const verticalSpeed = calculateVerticalSpeed();
-    document.getElementById('verticalSpeedOutput').innerHTML = `${verticalSpeed} feed/minute`;
+    document.getElementById('verticalSpeedOutput').innerText = `${verticalSpeed} feed/minute`;
 }
 
 function onInputFieldChange(event) {
