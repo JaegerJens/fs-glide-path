@@ -70,7 +70,14 @@ function calculateVerticalSpeed() {
     return Math.round(verticalSpeedSI / feedToMeter);
 }
 
+function calculateRequiredAngel() {
+    const angel = Math.atan(currentState.altitude / currentState.distance) * 180 / Math.PI;
+    return Math.round(angel * 10) / 10;
+}
+
 function calculate() {
+    const requiredAngel = calculateRequiredAngel();
+    document.getElementById('requiredAngelOutput').innerHTML = `- ${requiredAngel} °`;
     const verticalSpeed = calculateVerticalSpeed();
     document.getElementById('verticalSpeedOutput').innerHTML = `${verticalSpeed} feed/minute`;
 }
@@ -91,7 +98,7 @@ function onInputFieldChange(event) {
         </div>
         <div class="formfield">
             <label for="distanceInput">Distance in miles</label>
-            <input type="number" id="distanceInput" value="7">
+            <input type="number" id="distanceInput" value="10">
             <span id="distanceSI">0 m</span>
         </div>
         <div class="formfield">
@@ -108,7 +115,11 @@ function onInputFieldChange(event) {
 
     <section>
         <h2>Glide path</h2>
-        <div>
+        <div class="formfield">
+            <span>Required angel:</span>
+            <span id="requiredAngelOutput">3.0 °</span>
+        </div>
+        <div class="formfield">
             <span>Vertical speed:</span>
             <span id="verticalSpeedOutput">-600 feed/min</span>
         </div>
